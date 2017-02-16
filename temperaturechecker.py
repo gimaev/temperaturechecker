@@ -1,14 +1,31 @@
 __author__ = 'rival'
 
 from openweather import OpenWeather
+from json import load
+from io import open
 
-APPID = "5674f56bbb7193db0988e4b2e2a0e926"
+config = load(open('config.json'))
+
+APPID = config ["APPID"]
 
 fetcher = OpenWeather(APPID)
 
-city = input("Введите город: ")
+def print_header(cities):
+    print ("Достуные города:")
 
+    for i,city in enumerate(cities):
+        print("%d - %s" % (i+1, city["name"]))
 
-result = fetcher.fetch_weather(city)
+cities = config["CITIES"]
 
-print ("Погода в городе %s %.2f %s" % (city, result.temperature, result.icon))
+print_header(cities)
+
+city_index = int(input("Введите номер города: "))
+
+city = cities[city_index-1]
+
+city_id = city["id"]
+
+result = fetcher.fetch_weather(city_id)
+
+print ("%s: %.2f %s" % (city["name"], result.temperature, result.icon))
