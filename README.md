@@ -1,2 +1,2 @@
-# temperaturechecker telegram-bot
-My first Python project 
+# temperaturechecker 
+My first telegram-bot
